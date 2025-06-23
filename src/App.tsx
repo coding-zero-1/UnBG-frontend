@@ -4,6 +4,7 @@ import Result from "./pages/Result"
 import NotFound from "./pages/NotFound"
 import BuyCredits from "./pages/BuyCredits"
 import Navbar from "./components/Navbar"
+import Footer from "./components/Footer"
 const App = () => {
   return (
     <div className="min-h-screen bg-slate-50">
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/buy" element={<BuyCredits/>} />
         <Route path="*" element={<NotFound/>} />
       </Routes>
+      <Footer />
     </div>
   )
 }
