@@ -16,7 +16,40 @@ import profile_img_2 from './profile_img_2.png'
 import credit_icon from './credit_icon.png'
 import unbg_logo from './unbg-logo-navbar-2.png'
 
-export const assets = {
+interface TestimonialType{
+    id: number;
+    text: string;
+    author: string;
+    image: string;
+    jobTitle: string;
+}
+
+interface PlanType {
+    id: string;
+    price: number;
+    credits: number;
+    desc: string;
+}
+
+interface AssetsType {
+    logo: string;
+    logo_icon: string;
+    arrow_icon: string;
+    header_img: string;
+    remove_bg_icon: string;
+    upload_icon: string;
+    download_icon: string;
+    image_w_bg: string;
+    image_wo_bg: string;
+    facebook_icon: string;
+    google_plus_icon: string;
+    twitter_icon: string;
+    upload_btn_icon: string;
+    credit_icon: string;
+    unbg_logo: string;
+}
+
+export const assets:AssetsType = {
     logo,
     logo_icon,
     arrow_icon,
@@ -34,7 +67,7 @@ export const assets = {
     unbg_logo
 }
 
-export const testimonialsData = [
+export const testimonialsData:TestimonialType[] = [
     {
         id: 1,
         text: "I've been using bg.removal for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.",
@@ -51,7 +84,7 @@ export const testimonialsData = [
     },
 ];
 
-export const plans = [
+export const plans:PlanType[] = [
     {
       id: 'Basic',
       price: 10,
