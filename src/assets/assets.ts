@@ -14,7 +14,7 @@ import twitter_icon from './twitter_icon.svg'
 import profile_img_1 from './profile_img_1.png'
 import profile_img_2 from './profile_img_2.png'
 import credit_icon from './credit_icon.png'
-import unbg_logo from './unbg-logo-navbar-2.png'
+import unbg_logo from '../../public/unbg-logo-navbar-2.png'
 
 interface TestimonialType{
     id: number;
