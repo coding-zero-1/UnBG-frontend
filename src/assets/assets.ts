@@ -14,7 +14,6 @@ import twitter_icon from './twitter_icon.svg'
 import profile_img_1 from './profile_img_1.png'
 import profile_img_2 from './profile_img_2.png'
 import credit_icon from './credit_icon.png'
-import unbg_logo from '../../public/unbg-logo-navbar-2.png'
 
 interface TestimonialType{
     id: number;
@@ -46,7 +45,6 @@ interface AssetsType {
     twitter_icon: string;
     upload_btn_icon: string;
     credit_icon: string;
-    unbg_logo: string;
 }
 
 export const assets:AssetsType = {
@@ -64,7 +62,6 @@ export const assets:AssetsType = {
     twitter_icon,
     upload_btn_icon,
     credit_icon,
-    unbg_logo
 }
 
 export const testimonialsData:TestimonialType[] = [
