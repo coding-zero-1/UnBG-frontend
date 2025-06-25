@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center mx-4 py-1 lg:mx-44">
         <Link to="/">
-          <img src='/unbg-logo-navbar-2.png' alt="logo image" className="w-40 rounded-xl"/>
+          <img src='/unbg-logo-navbar-2.png' alt="logo image" className="w-28 rounded-xl"/>
         </Link>
       { isSignedIn && user ? 
         <div>
