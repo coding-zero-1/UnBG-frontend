@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound"
 import BuyCredits from "./pages/BuyCredits"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+  import { ToastContainer} from 'react-toastify';
 const App = () => {
   return (
     <div className="min-h-screen bg-slate-50">
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="*" element={<NotFound/>} />
       </Routes>
       <Footer />
+      <ToastContainer closeButton closeOnClick theme="light" position="bottom-right"  />
     </div>
   )
 }
