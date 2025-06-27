@@ -9,10 +9,11 @@ export const AppContext = createContext<{
     setCredit: React.Dispatch<React.SetStateAction<number>>;
     loadCredits: () => Promise<void>;
     backendUrl: string;
-    image?: Blob | undefined;
-    setImage?: React.Dispatch<React.SetStateAction<Blob | undefined>>;
-    removeBg?: (image: string) => Promise<void>;
+    image?: File | undefined;
+    setImage?: React.Dispatch<React.SetStateAction<File | undefined>>;
+    removeBg?: (image: File) => Promise<void>;
     resultImage?: string;
+    setResultImage?: React.Dispatch<React.SetStateAction<string>>;
 }>({
     credit: 5,
     setCredit: () => {},
@@ -21,13 +22,14 @@ export const AppContext = createContext<{
     image: undefined,
     setImage: () => {},
     removeBg: async () => {},
-    resultImage: ""
+    resultImage: "",
+    setResultImage: () => {},
 });
 
 const AppContextProvider = (props: React.PropsWithChildren<object>) => {
     const [credit,setCredit] = useState<number>(0);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const [image,setImage] = useState<Blob|undefined>(undefined);
+    const [image,setImage] = useState<File|undefined>(undefined);
     const [resultImage , setResultImage] = useState<string>("");
     const {getToken} = useAuth();
     const {isSignedIn}=useUser();
@@ -53,7 +55,7 @@ const AppContextProvider = (props: React.PropsWithChildren<object>) => {
             toast.error('Failed to load credits. Please try again later.');
         }
     }
-    const removeBg = async (image:string)=>{
+    const removeBg = async (image:File)=>{
         try {
             if(!isSignedIn) {
                 return openSignIn();

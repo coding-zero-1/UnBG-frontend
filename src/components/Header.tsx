@@ -22,7 +22,9 @@ const Header = () => {
                     hidden
                     onChange={(e) => {
                         if (e.target.files && e.target.files[0]) {
-                            removeBg(e.target.files[0]);
+                            if (removeBg) {
+                                removeBg(e.target.files[0]);
+                            }
                         }
                     }}
                     accept="image/*"
