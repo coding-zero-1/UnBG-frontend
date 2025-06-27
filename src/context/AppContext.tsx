@@ -9,15 +9,15 @@ export const AppContext = createContext<{
     setCredit: React.Dispatch<React.SetStateAction<number>>;
     loadCredits: () => Promise<void>;
     backendUrl: string;
-    image?: string;
-    setImage?: React.Dispatch<React.SetStateAction<string>>;
+    image?: Blob | undefined;
+    setImage?: React.Dispatch<React.SetStateAction<Blob | undefined>>;
     removeBg?: (image: string) => Promise<void>;
     resultImage?: string;
 }>({
-    credit: 0,
+    credit: 5,
     setCredit: () => {},
     loadCredits: async () => {},
-    backendUrl: import.meta.env.BACKEND_URL,
+    backendUrl: import.meta.env.VITE_BACKEND_URL,
     image: undefined,
     setImage: () => {},
     removeBg: async () => {},
@@ -26,8 +26,8 @@ export const AppContext = createContext<{
 
 const AppContextProvider = (props: React.PropsWithChildren<object>) => {
     const [credit,setCredit] = useState<number>(0);
-    const backendUrl = import.meta.env.BACKEND_URL;
-    const [image,setImage] = useState<string>("");
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const [image,setImage] = useState<Blob|undefined>(undefined);
     const [resultImage , setResultImage] = useState<string>("");
     const {getToken} = useAuth();
     const {isSignedIn}=useUser();
@@ -37,11 +37,13 @@ const AppContextProvider = (props: React.PropsWithChildren<object>) => {
     const loadCredits = async () => {
         try {
             const token = await getToken();
+            console.log("Token for loading credits:", token);
             const {data} = await axios.get(`${backendUrl}/api/v1/users/credits`, {
                 headers: {
                     token: token
                 },
             });
+            console.log("Credits data:", data);
 
             if(data.success){
                 setCredit(data.credits);
@@ -60,6 +62,26 @@ const AppContextProvider = (props: React.PropsWithChildren<object>) => {
             setResultImage("");
             console.log("Image to remove background:", image);
             navigate('/result');
+            const token = await getToken();
+            const formData = new FormData();
+            formData.append("image", image);
+            const {data} = await axios.post(`${backendUrl}/api/v1/images/remove-bg`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    token: token
+                }
+            });
+            if(data.success){
+                setResultImage(data.image);
+                setCredit(data.creditBalance);
+            }else{
+                toast.error(data.error || 'Failed to remove background. Please try again later.');
+                setCredit(data.creditBalance);
+                if(data.creditBalance === 0) {
+                    toast.error('Insufficient credits. Please purchase more credits to use this feature.');
+                    navigate('/buy');
+                }
+            }
         } catch (error) {
             console.error('Error removing background:', error);
             toast.error('Failed to remove background. Please try again later.');
@@ -72,7 +94,9 @@ const AppContextProvider = (props: React.PropsWithChildren<object>) => {
         backendUrl,
         image,
         setImage,
-        removeBg
+        removeBg,
+        resultImage,
+        setResultImage
     }
 
     return (
